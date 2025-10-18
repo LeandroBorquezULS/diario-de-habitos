@@ -196,10 +196,11 @@ class Vista:
 
         ventana = tk.Toplevel(self.root)
         ventana.title("Registros guardados")
-        vw, vh = 700, 600
+        vw, vh = 400, 400
         ventana.transient(self.root)
         ventana.resizable(True, True)
         ventana.update_idletasks()
+        ventana.minsize(400, 300)
 
         try:
             rx = self.root.winfo_rootx()
@@ -236,7 +237,7 @@ class Vista:
 
             nivel = r.get("animo", 3) or 3
             try:
-                img = Image.open(f"animo{nivel}.png").resize((48, 48))
+                img = Image.open(f"images/animo{nivel}.png").resize((48, 48))
                 photo = ImageTk.PhotoImage(img)
                 mini_imgs.append(photo)
                 lbl_img = tk.Label(fila, image=photo, bg="#EDE7FF")
