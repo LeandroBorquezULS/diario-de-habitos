@@ -187,6 +187,24 @@ class Vista:
         self.texto_nota.delete("1.0", "end")
         self.contador.config(text="0/200")
 
+    def confirmar_sobrescritura(self, registro_actual):
+        from tkinter import messagebox
+        fecha = registro_actual.get("fecha", "")
+        animo = registro_actual.get("animo", "")
+        nota = registro_actual.get("nota", "")
+        mensaje = (
+            f"Ya existe un registro para hoy ({fecha}).\n\n"
+            f"Ánimo actual: {animo}\n"
+            f"Nota: {nota or 'Sin nota'}\n\n"
+            "¿Deseas sobrescribir este registro?"
+        )
+        return messagebox.askyesno("Confirmar sobrescritura", mensaje)
+
+    def mostrar_mensaje(self, mensaje):
+        from tkinter import messagebox
+        messagebox.showinfo("Información", mensaje)
+
+
     def ver_registros(self):
         data = self.controlador.obtener_registros()
 
@@ -267,4 +285,6 @@ class Vista:
                          font=("Helvetica", 13)).pack(anchor="w")
             ttk.Separator(scroll_frame, orient="horizontal").pack(fill="x", pady=8)
 
-        ventana.mini_imgs = mini_imgs
+        # Mantener referencias a los PhotoImage para evitar que el recolector de basura
+        # las elimine y usar setattr para evitar errores del comprobador de tipos
+        setattr(ventana, "mini_imgs", mini_imgs)
